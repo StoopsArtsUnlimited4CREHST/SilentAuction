@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Donor Acknowledgement</title>
+<style>
+body {
+	font-family:"Times New Roman", Times, serif;
+	font-size:12pt;
+	margin: 96pt 40pt 40pt 40pt;
+	line-height: 115%;
+}
+ 
+h1 {
+	text-align:center;
+	text-decoration:underline;
+	font-weight:bold;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:14pt;
+	margin-top:28pt;
+	margin-bottom: 28pt;
+}
+
+table.donation-list {
+	border:none;
+	width:100%;
+}
+
+td.item {
+	width:50%;
+	padding-left:36pt;
+}
+
+</style>
+</head>
+
+<body>
+<p><span name="current-date">{current-date}</span></p>
+<p><br /><span name="account-name">{account-name}</span><br />
+  <span name="account-address">{account-address}</span></p>
+<h1>Donor Acknowledgement</h1>
+<p>Dear  <span name="account-name">{account-name}</span>,</p>
+<p>On  behalf of the Board of Directors, the Staff and dedicated Volunteers, the CREHST Museum  would like to thank you for your support during the 2013 CREHST Museum Spring  Swing annual fundraiser.  Thanks to your  generosity and that of many others we are able to continue to carry out the  mission of the museum.  </p>
+<p>The  CREHST Museum would like to acknowledge the  following contribution(s) totaling <strong><span name="donation-total">{donation-total}</span></strong> :</p>
+<table class="donation-list">
+<tr><td class="item">Raise Your Program</td><td class="amount"><span name="raise-your-program-subtotal">{raise-your-program-subtotal}</span></td></tr>
+<tr><td class="item">Silent Auction</td><td class="amount"><span name="silent-auction-subtotal">{silent-auction-subtotal}</span></td></tr>
+<tr><td class="item">Other Item</td><td class="amount"><span name="other-donation-subtotal">{other-donation-subtotal}</span></td></tr>
+</table>
+<p>
+<br />
+  The  museum operates under Environmental Science &amp; Technology Foundation, a  nonprofit organization operating under the Internal Revenue Code as a 501(c)(3)  tax exempt organization, ID# 91-1587106.   Donations made to the CREHST   Museum are deductible as  allowed by law.   No funds will be placed  in a donor advised fund nor given to a supporting organization, and no benefits  were received by the donor as a result of the above contribution(s).</p>
+<p><br />Sincerely,</p>
+<p>&nbsp;</p>
+<p>Paul  Schuler, Business Manager<br />
+  CREHST Museum </p>
+<script language="javascript">
+function getParameterByName(name) {
+    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+}
+
+var p = getParameterByName("print");
+if (p != null
+		&& p != 0
+		&& p != "false") {
+	window.print();
+}
+
+</script>
+</body>
+</html>
