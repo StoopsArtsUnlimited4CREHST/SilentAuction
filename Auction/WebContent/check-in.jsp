@@ -23,12 +23,12 @@
 <div id="container">
   <div id="header" style=";">
     <div style="height: 160px; padding: 1em;">
-      <div style="background-image: url(); background-repeat:no-repeat; display:block; float:left; height: 160px; width: 260px;"><a href="/AuctionWeb"><img name="logo" src="http://www.crehst.org/wp-content/themes/crehst/images/header.png" alt="" style="border: 0;"/></a></div>
+      <div style="background-image: url(); background-repeat:no-repeat; display:block; float:left; height: 160px; width: 260px;"><a href="/"><img name="logo" src="http://www.crehst.org/wp-content/themes/crehst/images/header.png" alt="" style="border: 0;"/></a></div>
       <!-- InstanceBeginEditable name="Headline" -->
       <div style="font-size:3em; float:left;">Check-In</div>
       <!-- InstanceEndEditable --></div>
     <div class="nav-bar">
-        <a href="check-in.jsp">Check In</a>
+        <a href="/check-in.jsp">Check In</a>
         <a href="raise-your-program.jsp">Raise Your Program</a>
         <a href="lot-closing.jsp">Lot Closing</a>
         <a href="check-out.jsp">Check Out</a>
@@ -62,7 +62,7 @@ or make a new one.
           <li><a href="#">Account</a></li>
           <li><a href="#">Account</a></li>
           <li><a href="#">Account</a></li>
-          <li><a href="accounts.jsp#create">Create a new account</a></li>
+          <li><a href="/accounts.jsp#create">Create a new account</a></li>
   </ol>
       </li>
       <li>Update all info on the account. 

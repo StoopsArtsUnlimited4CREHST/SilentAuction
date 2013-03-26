@@ -19,7 +19,7 @@
 	rel="stylesheet" type="text/css" />
 <link href="http://live.datatables.net/media/css/demo_table.css"
 	rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="jquery.form.js"></script>
+<script type="text/javascript" src="/jquery.form.js"></script>
 <script class="jsbin"
 	src="http://datatables.net/download/build/jquery.dataTables.nightly.js"></script>
 <script type="text/javascript">
@@ -83,7 +83,7 @@
 			success : success,
 			complete : complete,
 			error : error,
-			url : "/AuctionRestApi/lots/" + $data.find("id").text(),
+			url : "/api/lots/" + $data.find("id").text(),
 			type : "PUT",
 			context : $("#editLotForm"),
 			beforeSend : beforeSend,
@@ -104,7 +104,7 @@
 		for ( var i = 0; i < $lots.length; i++) {
 			$tr = $("<tr />").appendTo($table);
 			var $lot = $($lots[i]);
-			$("<td />").appendTo($tr).append('<input type="button" value="Edit" onclick="javascript: $.ajax({url: \'/AuctionRestApi/lots/' + $lot.find("id").text() +'\', success: loadEditForm});" />'); 
+			$("<td />").appendTo($tr).append('<input type="button" value="Edit" onclick="javascript: $.ajax({url: \'/api/lots/' + $lot.find("id").text() +'\', success: loadEditForm});" />'); 
 			$("<td />").appendTo($tr).text($lot.find("id").text());
 			$("<td />").appendTo($tr).text($lot.find("title").text());
 			$("<td />").appendTo($tr).text($lot.find("description").text());
@@ -126,7 +126,7 @@
 
 	function reloadTable() {
 		$.ajax({
-			url : "/AuctionRestApi/lots",
+			url : "/api/lots",
 			success : function(data, textStatus, jqXHR) {
 				var $lots = $(data).find("lot");
 				setLotsInTable($("#example tbody"), $lots);
@@ -142,17 +142,17 @@
 		// lock the UI
 		this.find('input,select').attr("disabled", "disabled");
 		this.find('textarea').attr("readonly", "readonly");
-		this.find(".status-icon").attr("src", "images/loading.gif").show();
-		//$row.find('.donation-status').append('<ul class="status-list" data-lot-id="' + tempLotId + '" ><li class="pending annotation"><img src="images/loading.gif" style="height: 1.2em; width: 1.2em;" onclick="loadDonation(' + tempLotId + ');"/> Creating donation...</li></ol>');
+		this.find(".status-icon").attr("src", "/images/loading.gif").show();
+		//$row.find('.donation-status').append('<ul class="status-list" data-lot-id="' + tempLotId + '" ><li class="pending annotation"><img src="/images/loading.gif" style="height: 1.2em; width: 1.2em;" onclick="loadDonation(' + tempLotId + ');"/> Creating donation...</li></ol>');
 	}
 
 	// is called when a the submission request completes.
 	function success(data, textStatus, jqXHR) {
-		this.find(".status-icon").attr("src", "images/status-ok.png").show();
+		this.find(".status-icon").attr("src", "/images/status-ok.png").show();
 	}
 
 	function error(data, textStatus, jqXHR) {
-		this.find(".status-icon").attr("src", "images/status-failed.png").show();
+		this.find(".status-icon").attr("src", "/images/status-failed.png").show();
 	}
 
 	function complete(data, textStatus, jqXHR) {
@@ -174,12 +174,12 @@
 <div id="container">
   <div id="header" style=";">
     <div style="height: 160px; padding: 1em;">
-      <div style="background-image: url(); background-repeat:no-repeat; display:block; float:left; height: 160px; width: 260px;"><a href="/AuctionWeb"><img name="logo" src="http://www.crehst.org/wp-content/themes/crehst/images/header.png" alt="" style="border: 0;"/></a></div>
+      <div style="background-image: url(); background-repeat:no-repeat; display:block; float:left; height: 160px; width: 260px;"><a href="/"><img name="logo" src="http://www.crehst.org/wp-content/themes/crehst/images/header.png" alt="" style="border: 0;"/></a></div>
       <!-- InstanceBeginEditable name="Headline" -->
       <div style="font-size:3em; float:left;">Lots</div>
       <!-- InstanceEndEditable --></div>
     <div class="nav-bar">
-        <a href="check-in.jsp">Check In</a>
+        <a href="/check-in.jsp">Check In</a>
         <a href="raise-your-program.jsp">Raise Your Program</a>
         <a href="lot-closing.jsp">Lot Closing</a>
         <a href="check-out.jsp">Check Out</a>
@@ -199,7 +199,7 @@
 					<li><a href="#container" id="viewTab">View</a></li>
 				</ul>
 				<div id="create">
-					<form id="createLotForm" action="/AuctionRestApi/lots"
+					<form id="createLotForm" action="/api/lots"
 						method="post">
 						<table border="0">
 							<tr>
@@ -244,7 +244,7 @@
 						<p>
 							<input id="createLotButton" type="submit" value="Create" /> <input
 								id="clearLotButton" type="reset" value="Clear" /> <img class="status-icon"
-								id="createLotStatus" src="images/blank.png" />
+								id="createLotStatus" src="/images/blank.png" />
 						</p>
 					</form>
 				</div>
@@ -293,7 +293,7 @@
 						<p>
 							<input id="editLotButton" type="submit" value="Save" /> <input
 								id="cancelEditLotButton" type="reset" value="Cancel" /> <img class="status-icon"
-								id="editLotStatus" src="images/blank.png" />
+								id="editLotStatus" src="/images/blank.png" />
 						</p>
 					</form>
 				</div>

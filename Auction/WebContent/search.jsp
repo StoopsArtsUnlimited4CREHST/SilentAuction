@@ -30,7 +30,7 @@
 			},
 		});
 		$("#search").autocomplete({
-			source : "/AuctionRestApi/search/autocomplete",
+			source : "/search/autocomplete",
 		//minLength: 3
 		});
 		$(".tabs").tabs();
@@ -46,7 +46,7 @@
 
 	function doSearch(criteria) {
 		$.ajax({
-			url : "/AuctionRestApi/search?q=" + encodeURIComponent(criteria),
+			url : "/search?q=" + encodeURIComponent(criteria),
 			success : loadSearchResults,
 			cache : false,
 		});
@@ -68,10 +68,10 @@
 								$('<img />').addClass("search-result-icon"));
 						if ($r.find("active").text() != "false") {
 							$e.find(".search-result-icon").attr("src",
-									"images/user-active.png");
+									"/images/user-active.png");
 						} else {
 							$e.find(".search-result-icon").attr("src",
-									"images/user-inactive.png");
+									"/images/user-inactive.png");
 						}
 						break;
 					case "lot":
@@ -82,11 +82,11 @@
 						if ($r.find("status").text() != "PAID") {
 							// NONE, BIDDING, CLOSED
 							$e.find(".search-result-icon").attr("src",
-									"images/lot-active.png");
+									"/images/lot-active.png");
 						} else {
 							// PAID
 							$e.find(".search-result-icon").attr("src",
-									"images/lot-inactive.png");
+									"/images/lot-inactive.png");
 						}
 						break;
 					default:
@@ -126,11 +126,11 @@
 		if ($data.find("active").text() != "false") {
 			$("#item-details .account-active").text("Active");
 			$("#item-details .account-active-icon").attr("src",
-					"images/user-active.png");
+					"/images/user-active.png");
 		} else {
 			$("#item-details .account-active").text("Inactive");
 			$("#item-details .account-active-icon").attr("src",
-					"images/user-inactive.png");
+					"/images/user-inactive.png");
 		}
 
 		// switch view
@@ -171,7 +171,7 @@
 				<div id="tabs-general" style="min-height: 150px;">
 					<div class="account-active-container" align="center"
 						style="float: right; border: thin solid gray; border-radius: 1em;">
-						<img class="account-active-icon" src="images/user-active.png"><br>
+						<img class="account-active-icon" src="/images/user-active.png"><br>
 						<span class="account-active">Active</span>
 					</div>
 					<table>
@@ -211,7 +211,7 @@
 				<div id="tabs-general" style="min-height: 150px;">
 					<div class="lot-active-container" align="center"
 						style="float: right; border: thin solid gray; border-radius: 1em;">
-						<img class="lot-active-icon" src="images/lot-active.png" height="128px" width="128px"><br>
+						<img class="lot-active-icon" src="/images/lot-active.png" height="128px" width="128px"><br>
 						<span class="lot-active">Active</span>
 					</div>
 					<table border="0">

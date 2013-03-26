@@ -31,7 +31,7 @@
 			},
 		});
 		$("#search").autocomplete({
-			source : "/AuctionRestApi/search/autocomplete",
+			source : "/search/autocomplete",
 		//minLength: 3
 		});
 		$(".tabs").tabs();
@@ -42,7 +42,7 @@
 
 	function doSearch(criteria) {
 		$.ajax({
-			url : "/AuctionRestApi/search?q=" + encodeURIComponent(criteria),
+			url : "/search?q=" + encodeURIComponent(criteria),
 			success : loadSearchResults,
 			cache : false,
 		});
@@ -63,19 +63,19 @@
 					case "account":
 						if ($r.find("active").text() != "false") {
 							$e.find(".search-result-icon").attr("src",
-									"images/user-active.png");
+									"/images/user-active.png");
 						} else {
 							$e.find(".search-result-icon").attr("src",
-									"images/user-inactive.png");
+									"/images/user-inactive.png");
 						}
 						break;
 					case "lot":
 						if ($r.find("active").text() != "false") {
 							$e.find(".search-result-icon").attr("src",
-									"images/lot-active.png");
+									"/images/lot-active.png");
 						} else {
 							$e.find(".search-result-icon").attr("src",
-									"images/lot-inactive.png");
+									"/images/lot-inactive.png");
 						}
 						break;
 					default:
@@ -115,11 +115,11 @@
 		if ($data.find("active").text() != "false") {
 			$("#item-details .account-active").text("Active");
 			$("#item-details .account-active-icon").attr("src",
-					"images/user-active.png");
+					"/images/user-active.png");
 		} else {
 			$("#item-details .account-active").text("Inactive");
 			$("#item-details .account-active-icon").attr("src",
-					"images/user-inactive.png");
+					"/images/user-inactive.png");
 		}
 
 		// switch view
@@ -145,12 +145,12 @@
 <div id="container">
   <div id="header" style=";">
     <div style="height: 160px; padding: 1em;">
-      <div style="background-image: url(); background-repeat:no-repeat; display:block; float:left; height: 160px; width: 260px;"><a href="/AuctionWeb"><img name="logo" src="http://www.crehst.org/wp-content/themes/crehst/images/header.png" alt="" style="border: 0;"/></a></div>
+      <div style="background-image: url(); background-repeat:no-repeat; display:block; float:left; height: 160px; width: 260px;"><a href="/"><img name="logo" src="http://www.crehst.org/wp-content/themes/crehst/images/header.png" alt="" style="border: 0;"/></a></div>
       <!-- InstanceBeginEditable name="Headline" -->
       <div style="font-size:3em; float:left;">CREHST Silent Auction</div>
       <!-- InstanceEndEditable --></div>
     <div class="nav-bar">
-        <a href="check-in.jsp">Check In</a>
+        <a href="/check-in.jsp">Check In</a>
         <a href="raise-your-program.jsp">Raise Your Program</a>
         <a href="lot-closing.jsp">Lot Closing</a>
         <a href="check-out.jsp">Check Out</a>
@@ -183,7 +183,7 @@
 				<div id="tabs-general" style="min-height: 150px;">
 					<div class="account-active-container" align="center"
 						style="float: right; border: thin solid gray; border-radius: 1em;">
-						<img class="account-active-icon" src="images/user-active.png" /><br />
+						<img class="account-active-icon" src="/images/user-active.png" /><br />
 						<span class="account-active">Active</span>
 					</div>
 					<table>
@@ -223,7 +223,7 @@
 				<div id="tabs-general" style="min-height: 150px;">
 					<div class="lot-active-container" align="center"
 						style="float: right; border: thin solid gray; border-radius: 1em;">
-						<img class="lot-active-icon" src="images/lot-active.png" height="128px" width="128px"><br>
+						<img class="lot-active-icon" src="/images/lot-active.png" height="128px" width="128px"><br>
 						<span class="lot-active">Active</span>
 					</div>
 					<table border="0">

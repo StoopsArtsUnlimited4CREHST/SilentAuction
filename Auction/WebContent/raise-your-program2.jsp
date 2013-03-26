@@ -38,7 +38,7 @@ function submitDonation(button) {
 	var $row = $button.parents('tr');
 	$row.find('input[type="text"]').attr("disabled", "disabled");
 	var tempLotId = Math.random();
-	$row.find('.donation-status').append('<ul class="status-list" data-lot-id="' + tempLotId + '" ><li class="pending annotation"><img src="images/loading.gif" style="height: 1.2em; width: 1.2em;" onclick="loadDonation(' + tempLotId + ');"/> Creating donation...</li></ol>');
+	$row.find('.donation-status').append('<ul class="status-list" data-lot-id="' + tempLotId + '" ><li class="pending annotation"><img src="/images/loading.gif" style="height: 1.2em; width: 1.2em;" onclick="loadDonation(' + tempLotId + ');"/> Creating donation...</li></ol>');
 	
 	// submit donation to web service
 	
@@ -55,14 +55,14 @@ function loadDonation(tempLotId) {
 	$statusList.children(".pending").remove();
 	// assume success
 	// append a new status
-	$statusList.append('<li class="annotation"><img src="images/status-ok.png" style="height: 1.2em; width: 1.2em;" />Created donation of $' + amount.toFixed(2) +' for ' + donorName + ' (lot #' + lotId + '). <a data-operation="cancel" href="javascript: cancelDonation(' + lotId + ');">Cancel</a></li>');
+	$statusList.append('<li class="annotation"><img src="/images/status-ok.png" style="height: 1.2em; width: 1.2em;" />Created donation of $' + amount.toFixed(2) +' for ' + donorName + ' (lot #' + lotId + '). <a data-operation="cancel" href="javascript: cancelDonation(' + lotId + ');">Cancel</a></li>');
 }
 
 // called by ui
 function cancelDonation(lotId) {
 	var $statusList = $('ul[data-lot-id="' + lotId + '"]');
 	$statusList.children().last().addClass("canceled").find('[data-operation="cancel"]').remove();
-	$statusList.append('<li class="pending annotation"><img src="images/loading.gif" style="height: 1.2em; width: 1.2em;" onclick="canceledDonation(' + lotId + ');"/> Canceling...</li>');
+	$statusList.append('<li class="pending annotation"><img src="/images/loading.gif" style="height: 1.2em; width: 1.2em;" onclick="canceledDonation(' + lotId + ');"/> Canceling...</li>');
 }
 
 // is called when the cancellation request completes
@@ -73,7 +73,7 @@ function canceledDonation(lotId) {
 	$statusList.children(".pending").remove();
 	// assume success
 	// append a new status
-	$statusList.append('<li class="annotation"><img src="images/status-ok.png" style="height: 1.2em; width: 1.2em;" />Canceled lot #' + lotId + '.</li>');
+	$statusList.append('<li class="annotation"><img src="/images/status-ok.png" style="height: 1.2em; width: 1.2em;" />Canceled lot #' + lotId + '.</li>');
 }
 
 function addDonations() {
@@ -117,11 +117,11 @@ function addDonations() {
 					<td valign="top"><input name="" type="text" value="B063" disabled="disabled" /></td>
 					<td valign="top"><input name="" type="button" value="Submit" disabled="disabled" onClick="$(this).attr('disabled','disabled')"/></td>
 					<td valign="top">
-							<nobr><img src="images/status-ok.png"
+							<nobr><img src="/images/status-ok.png"
 								style="height: 1.2em; width: 1.2em;" /><span
 								style="color: #888; text-decoration: line-through;">Added
 									donation of $100 for Buddy Stoops.</span></nobr><br />
-							<nobr><img src="images/status-ok.png"
+							<nobr><img src="/images/status-ok.png"
 								style="height: 1.2em; width: 1.2em;" /><span
 								style="color: #888;">Canceled donation, lot ID: 9874.</span></nobr><br />
 					</td>
@@ -129,7 +129,7 @@ function addDonations() {
 				<tr>
 					<td valign="top"><input name="" type="text" value="B01234" /></td>
 					<td valign="top"><input name="input2" type="button" value="Submit" onClick="$(this).attr('disabled','disabled')"/></td>
-					<td valign="top"><img src="images/status-failed.png"
+					<td valign="top"><img src="/images/status-failed.png"
 						style="height: 1.2em; width: 1.2em;" /> <span style="color: red;">Unable
 							to find bidder "B01234"</span></td>
 				</tr> -->
@@ -149,7 +149,7 @@ function addDonations() {
 					<td valign="top"></td>
 				</tr>
 				<tr>
-					<td valign="top"><img src="images/plus.png" style="width: 2.0em; height: 2.0em;" onClick="addDonations();"></td>
+					<td valign="top"><img src="/images/plus.png" style="width: 2.0em; height: 2.0em;" onClick="addDonations();"></td>
 				</tr>
 			</tbody>
 		</table>
