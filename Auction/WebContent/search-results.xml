@@ -1,0 +1,32 @@
+<results>
+	<account>
+		<link rel="self" href="http://localhost:8080/AuctionRestApi/accounts/63"/>
+		<active>true</active>
+		<name>Buddy Turbo Stoops</name>
+	</account>
+	<account>
+		<link rel="self" href="http://localhost:8080/AuctionRestApi/accounts/64"/>
+		<active>true</active>
+		<name>Ratster Stoops</name>
+	</account>
+	<account>
+		<link rel="self" href="http://localhost:8080/AuctionRestApi/accounts/65"/>
+		<active>false</active>
+		<name>Birdbrain Stoops</name>
+	</account>
+	<lot>
+		<link rel="self" href="http://localhost:8080/AuctionRestApi/lots/119"/>
+		<status>NONE</status>
+		<title>Chewed Plush Hedgehog</title>
+	</lot>
+	<lot>
+		<link rel="self" href="http://localhost:8080/AuctionRestApi/lots/120"/>
+		<status>PAID</status>
+		<title>Block of Cheese</title>
+	</lot>
+	<lot>
+		<link rel="self" href="http://localhost:8080/AuctionRestApi/lots/121"/>
+		<status>NONE</status>
+		<title>Chicken Breasts</title>
+	</lot>
+</results>
