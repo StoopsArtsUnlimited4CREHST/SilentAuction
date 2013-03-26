@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="AuctionWeb">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <dependent-module archiveName="AuctionLib.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/AuctionLib/AuctionLib">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="AuctionRestApi.war" deploy-path="/WEB-INF/lib" handle="module:/resource/AuctionRestApi/AuctionRestApi">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="AuctionWeb"/>
+        <property name="java-output-path" value="/AuctionWeb/build/classes"/>
+    </wb-module>
+</project-modules>
