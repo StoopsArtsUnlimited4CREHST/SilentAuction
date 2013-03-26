@@ -1,4 +1,0 @@
-SilentAuction
-=============
-
-Silent auction system
