@@ -1,8 +1,9 @@
 CREATE DATABASE  IF NOT EXISTS `auction` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `auction`;
 
-CREATE USER 'auction' IDENTIFIED BY 'auction';
-GRANT ALL ON `auction`.* TO 'auction';
+GRANT ALL ON *.* TO 'root' IDENTIFIED BY 'auction' WITH GRANT OPTION;
+GRANT ALL ON *.* TO 'auction'@localhost IDENTIFIED BY 'auction' WITH GRANT OPTION;
+GRANT ALL ON *.* TO 'auction' IDENTIFIED BY 'auction' WITH GRANT OPTION;
 
 
 -- MySQL dump 10.13  Distrib 5.6.10, for Win64 (x86_64)
@@ -23,13 +24,13 @@ GRANT ALL ON `auction`.* TO 'auction';
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `accounts`
+-- Table structure for table `ACCOUNTS`
 --
 
-DROP TABLE IF EXISTS `accounts`;
+DROP TABLE IF EXISTS `ACCOUNTS`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `accounts` (
+CREATE TABLE `ACCOUNTS` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `NAME` tinytext,
   `ADDRESS` mediumtext,
@@ -41,17 +42,17 @@ CREATE TABLE `accounts` (
   `CREATED` timestamp NULL,
   `MODIFIED` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `lots`
+-- Table structure for table `LOTS`
 --
 
-DROP TABLE IF EXISTS `lots`;
+DROP TABLE IF EXISTS `LOTS`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `lots` (
+CREATE TABLE `LOTS` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `TITLE` tinytext,
   `DESCRIPTION` text,
@@ -60,20 +61,21 @@ CREATE TABLE `lots` (
   `FINAL_VALUE` decimal(7,2) DEFAULT '0.00',
   `WINNER` int(11) DEFAULT NULL,
   `CONTRIBUTOR` int(11) DEFAULT NULL,
+  `TYPE` tinytext,
   `CREATED` timestamp NULL,
   `MODIFIED` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=158 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20001 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `payments`
+-- Table structure for table `PAYMENTS`
 --
 
-DROP TABLE IF EXISTS `payments`;
+DROP TABLE IF EXISTS `PAYMENTS`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `payments` (
+CREATE TABLE `PAYMENTS` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `ACCOUNT_ID` int(11) DEFAULT NULL,
   `AMOUNT` decimal(7,2) DEFAULT NULL,
@@ -83,8 +85,8 @@ CREATE TABLE `payments` (
   `MODIFIED` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID`),
   KEY `ID_idx` (`ACCOUNT_ID`),
-  CONSTRAINT `ID` FOREIGN KEY (`ACCOUNT_ID`) REFERENCES `accounts` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+  CONSTRAINT `ID` FOREIGN KEY (`ACCOUNT_ID`) REFERENCES `ACCOUNTS` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=30001 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

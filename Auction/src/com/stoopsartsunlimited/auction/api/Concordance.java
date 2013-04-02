@@ -10,7 +10,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 
 public class Concordance {
-	protected HashMap<String, Integer> map = new HashMap<>();
+	protected HashMap<String, Integer> map = new HashMap<String, Integer>();
 	
 	public Collection<String> getWords() {
 		return map.keySet();

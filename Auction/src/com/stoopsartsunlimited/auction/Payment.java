@@ -1,8 +1,11 @@
 package com.stoopsartsunlimited.auction;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.stoopsartsunlimited.atom.Link;
 
 @XmlRootElement(name = "payment")
 public class Payment {
@@ -17,8 +20,14 @@ public class Payment {
 	private String comments = null;
 	private Date received = null;
 	private Date modified = null;
+	private ArrayList<Link> link = null;
+	private Lots forLots = null;
 	
 	public Payment() {
+	}
+	
+	public Payment(int id) {
+		this.id = id;
 	}
 	
 	public Payment(int id, int account, double amount, String instrument, String comments, Date received, Date modified) {
@@ -81,6 +90,22 @@ public class Payment {
 	}
 	public void setModified(Date modified) {
 		this.modified = modified;
+	}
+
+	public ArrayList<Link> getLink() {
+		return link;
+	}
+
+	public void setLink(ArrayList<Link> link) {
+		this.link = link;
+	}
+
+	public Lots getForLots() {
+		return forLots;
+	}
+
+	public void setForLots(Lots forLots) {
+		this.forLots = forLots;
 	}
 	
 }

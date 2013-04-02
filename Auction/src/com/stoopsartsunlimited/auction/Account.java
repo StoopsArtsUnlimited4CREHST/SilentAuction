@@ -20,6 +20,10 @@ public class Account {
 	public Account() {
 	}
 
+	public Account(int id) {
+		this.id = id;
+	}
+	
 	public Account(int id, String name, String address, String phone, String email, String taxId, String bidderId, boolean active, Date created, Date modified) {
 		this.id = id;
 		this.name = name;

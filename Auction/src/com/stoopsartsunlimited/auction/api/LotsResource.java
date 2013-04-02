@@ -82,6 +82,9 @@ public class LotsResource {
 				case "contributor":
 					o.setContributor(Integer.valueOf(nvp.getValue()));
 					break;
+				case "type":
+					o.setType(nvp.getValue());
+					break;
 
 				default:
 					throw new WebApplicationException(Status.BAD_REQUEST);
@@ -127,11 +130,11 @@ public class LotsResource {
 		return db.getLot(id);
 	}
 
-	// put Account by id
+	// put lot by id
 	@PUT
 	@Path("{id:\\d+}")
 	@Consumes(MediaType.APPLICATION_XML)
-	public Response updateAccount(@PathParam("id") int id, Lot lot) throws Exception {
+	public Response updateLot(@PathParam("id") int id, Lot lot) throws Exception {
 		AuctionDataSource db = new AuctionDataSource();
 		Lot base = db.getLot(id);
 		if (base == null) {
@@ -139,6 +142,7 @@ public class LotsResource {
 		}
 		// update base with changes
 		base.setContributor(lot.getContributor());
+		base.setType(lot.getType());
 		base.setDeclaredValue(lot.getDeclaredValue());
 		base.setDescription(lot.getDescription());
 		base.setFinalValue(lot.getFinalValue());
@@ -148,11 +152,11 @@ public class LotsResource {
 		db.put(base);
 		return Response.noContent().build();
 	}
-	// put Account by id from an HTML form
+	// put lot by id from an HTML form
 	@PUT
 	@Path("{id:\\d+}")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response updateAccount(@PathParam("id") int id, String entity) throws Exception {
+	public Response updateLot(@PathParam("id") int id, String entity) throws Exception {
 		AuctionDataSource db = new AuctionDataSource();
 		Lot base = db.getLot(id);
 		if (base == null) {
@@ -183,6 +187,9 @@ public class LotsResource {
 				break;
 			case "contributor":
 				base.setContributor(Integer.valueOf(nvp.getValue()));
+				break;
+			case "type":
+				base.setType(nvp.getValue());
 				break;
 
 			default:

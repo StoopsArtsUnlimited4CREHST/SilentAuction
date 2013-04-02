@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /*
  * see http://www.w3schools.com/tags/tag_link.asp
+ * see http://www.iana.org/assignments/link-relations/link-relations.xml
  */
 @XmlRootElement(name = "link")
 public class Link {

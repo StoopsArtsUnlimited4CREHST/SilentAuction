@@ -20,20 +20,27 @@ public class Lot {
 	 * Account ID of the person who gave the lot to the auction.
 	 */
 	private int contributor = 0;
+	private String type = null;
 	private Date created = null;
 	private Date modified = null;
 	
 	public enum BiddingStatus {
 		NONE,
-		BIDDING,
-		CLOSED,
-		PAID,
+		NOT_YET_OPENED,
+		BIDDING_OPEN,
+		BIDDING_CLOSED,
+		CLOSED_PAID,
+		CANCELLED,
 	}
 	
 	public Lot() {
 	}
 	
-	public Lot(int id, String title, String description, BiddingStatus status, double declaredValue, double finalValue, int winner, int contributor, Date created, Date modified) {
+	public Lot(int id) {
+		this.id = id;
+	}
+	
+	public Lot(int id, String title, String description, BiddingStatus status, double declaredValue, double finalValue, int winner, int contributor, String type, Date created, Date modified) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
@@ -42,12 +49,13 @@ public class Lot {
 		this.finalValue = finalValue;
 		this.winner = winner;
 		this.contributor = contributor;
+		this.type = type;
 		this.created = created;
 		this.modified = modified;
 	}
 	
 	public Lot(int id, String title, double declaredValue, int contributor) {
-		this(id, title, title, BiddingStatus.NONE, declaredValue, 0, 0, contributor, new Date(), new Date());
+		this(id, title, title, BiddingStatus.NONE, declaredValue, 0, 0, contributor, null, new Date(), new Date());
 	}
 
 	@Override
@@ -117,6 +125,14 @@ public class Lot {
 
 	public void setContributor(int contributor) {
 		this.contributor = contributor;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public Date getCreated() {

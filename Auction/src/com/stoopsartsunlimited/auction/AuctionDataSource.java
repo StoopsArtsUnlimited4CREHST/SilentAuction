@@ -13,7 +13,7 @@ import java.util.LinkedList;
 import com.stoopsartsunlimited.auction.Lot.BiddingStatus;
 
 public class AuctionDataSource {
-	private static final String connectionString = "jdbc:mysql://localhost:3306/auction";
+	private static final String connectionString = "jdbc:mysql://192.168.1.136:3306/auction";
 	private static final String dbUser = "auction";
 	private static final String dbPass = "auction";
 	private Connection db;
@@ -35,15 +35,15 @@ public class AuctionDataSource {
 	public void put(Account o) throws SQLException {
 		if (o.getId() <= 0) {
 			PreparedStatement statement = db.prepareStatement(
-				"INSERT INTO `AUCTION`.`ACCOUNTS`" +
-				"(`NAME`," +
-				"`ADDRESS`," +
-				"`PHONE`," +
-				"`EMAIL`," +
-				"`TAX_ID`," +
-				"`BIDDER_ID`," +
-				"`ACTIVE`)" +
-				"VALUES" +
+				"INSERT INTO `auction`.`ACCOUNTS` " +
+				"(`NAME`, " +
+				"`ADDRESS`, " +
+				"`PHONE`, " +
+				"`EMAIL`, " +
+				"`TAX_ID`, " +
+				"`BIDDER_ID`, " +
+				"`ACTIVE`) " +
+				"VALUES " +
 				"(" +
 				"?," + // name
 				"?," + // address
@@ -69,17 +69,17 @@ public class AuctionDataSource {
 		} else {
 			// update
 			PreparedStatement statement = db.prepareStatement(
-				"UPDATE `AUCTION`.`ACCOUNTS`" +
-				"SET" +
-				"`NAME` = ?," +
-				"`ADDRESS` = ?," +
-				"`PHONE` = ?," +
-				"`EMAIL` = ?," +
-				"`TAX_ID` = ?," +
-				"`BIDDER_ID` = ?," +
-				"`ACTIVE` = ?," +
-				"`CREATED` = ?" +
-				"WHERE `ID` = ?;");
+				"UPDATE `auction`.`ACCOUNTS` " +
+				"SET " +
+				"`NAME` = ?, " +
+				"`ADDRESS` = ?, " +
+				"`PHONE` = ?, " +
+				"`EMAIL` = ?, " +
+				"`TAX_ID` = ?, " +
+				"`BIDDER_ID` = ?, " +
+				"`ACTIVE` = ? " +
+				//"`CREATED` = ? " +
+				"WHERE `ID` = ?; ");
 		
 			statement.setString(1, o.getName());
 			statement.setString(2, o.getAddress());
@@ -88,8 +88,8 @@ public class AuctionDataSource {
 			statement.setString(5, o.getTaxId());
 			statement.setString(6, o.getBidderId());
 			statement.setBoolean(7, o.isActive());
-			statement.setTimestamp(8, new Timestamp(o.getCreated().getTime()));
-			statement.setInt(9, o.getId());
+			//statement.setTimestamp(8, new Timestamp(o.getCreated().getTime()));
+			statement.setInt(8, o.getId());
 			
 			statement.executeUpdate();
 		}
@@ -97,18 +97,18 @@ public class AuctionDataSource {
 	
 	public Account getAccount(int id) throws SQLException {
 		PreparedStatement statement = db.prepareStatement(
-			"SELECT" +
-			"`ACCOUNTS`.`ID`," +
-			"`ACCOUNTS`.`NAME`," +
-			"`ACCOUNTS`.`ADDRESS`," +
-			"`ACCOUNTS`.`PHONE`," +
-			"`ACCOUNTS`.`EMAIL`," +
-			"`ACCOUNTS`.`TAX_ID`," +
-			"`ACCOUNTS`.`BIDDER_ID`," +
-			"`ACCOUNTS`.`ACTIVE`," +
-			"`ACCOUNTS`.`CREATED`," +
-			"`ACCOUNTS`.`MODIFIED`" +
-			"FROM `AUCTION`.`ACCOUNTS` WHERE `ID` = ?;");
+			"SELECT " +
+			"`ACCOUNTS`.`ID`, " +
+			"`ACCOUNTS`.`NAME`, " +
+			"`ACCOUNTS`.`ADDRESS`, " +
+			"`ACCOUNTS`.`PHONE`, " +
+			"`ACCOUNTS`.`EMAIL`, " +
+			"`ACCOUNTS`.`TAX_ID`, " +
+			"`ACCOUNTS`.`BIDDER_ID`, " +
+			"`ACCOUNTS`.`ACTIVE`, " +
+			"`ACCOUNTS`.`CREATED`, " +
+			"`ACCOUNTS`.`MODIFIED` " +
+			"FROM `auction`.`ACCOUNTS` WHERE `ID` = ?;");
 		
 		statement.setInt(1, id);
 		
@@ -124,8 +124,8 @@ public class AuctionDataSource {
 					rs.getString("TAX_ID"),
 					rs.getString("BIDDER_ID"),
 					rs.getBoolean("ACTIVE"),
-					new Date(rs.getTimestamp("CREATED").getTime()),
-					new Date(rs.getTimestamp("MODIFIED").getTime())
+					new Date(rs.getTimestamp("CREATED") != null ? rs.getTimestamp("CREATED").getTime() : 0),
+					new Date(rs.getTimestamp("MODIFIED") != null ? rs.getTimestamp("MODIFIED").getTime() : 0)
 					);
 		} else {
 			return null;
@@ -134,18 +134,18 @@ public class AuctionDataSource {
 	
 	public Collection<Account> getAllAccounts() throws SQLException {
 		PreparedStatement statement = db.prepareStatement(
-			"SELECT" +
-			"`ACCOUNTS`.`ID`," +
-			"`ACCOUNTS`.`NAME`," +
-			"`ACCOUNTS`.`ADDRESS`," +
-			"`ACCOUNTS`.`PHONE`," +
-			"`ACCOUNTS`.`EMAIL`," +
-			"`ACCOUNTS`.`TAX_ID`," +
-			"`ACCOUNTS`.`BIDDER_ID`," +
-			"`ACCOUNTS`.`ACTIVE`," +
-			"`ACCOUNTS`.`CREATED`," +
-			"`ACCOUNTS`.`MODIFIED`" +
-			"FROM `AUCTION`.`ACCOUNTS`;");
+			"SELECT " +
+			"`ACCOUNTS`.`ID`, " +
+			"`ACCOUNTS`.`NAME`, " +
+			"`ACCOUNTS`.`ADDRESS`, " +
+			"`ACCOUNTS`.`PHONE`, " +
+			"`ACCOUNTS`.`EMAIL`, " +
+			"`ACCOUNTS`.`TAX_ID`, " +
+			"`ACCOUNTS`.`BIDDER_ID`, " +
+			"`ACCOUNTS`.`ACTIVE`, " +
+			"`ACCOUNTS`.`CREATED`, " +
+			"`ACCOUNTS`.`MODIFIED` " +
+			"FROM `auction`.`ACCOUNTS`;");
 		
 		statement.executeQuery();
 		ResultSet rs = statement.getResultSet();
@@ -160,8 +160,8 @@ public class AuctionDataSource {
 				rs.getString("TAX_ID"),
 				rs.getString("BIDDER_ID"),
 				rs.getBoolean("ACTIVE"),
-				new Date(rs.getTimestamp("CREATED").getTime()),
-				new Date(rs.getTimestamp("MODIFIED").getTime())
+				new Date(rs.getTimestamp("CREATED") != null ? rs.getTimestamp("CREATED").getTime() : 0),
+				new Date(rs.getTimestamp("MODIFIED") != null ? rs.getTimestamp("MODIFIED").getTime() : 0)
 				));
 		}
 		return r;
@@ -172,16 +172,17 @@ public class AuctionDataSource {
 		if (o.getId() <= 0) {
 			// insert
 			PreparedStatement statement = db.prepareStatement(
-				"INSERT INTO `AUCTION`.`LOTS`" +
+				"INSERT INTO `auction`.`LOTS` " +
 				"(" +
-				"`TITLE`," +
-				"`DESCRIPTION`," +
-				"`STATUS`," +
-				"`DECLARED_VALUE`," +
-				"`FINAL_VALUE`," +
-				"`WINNER`," +
-				"`CONTRIBUTOR`)" +
-				"VALUES" +
+				"`TITLE`, " +
+				"`DESCRIPTION`, " +
+				"`STATUS`, " +
+				"`DECLARED_VALUE`, " +
+				"`FINAL_VALUE`, " +
+				"`WINNER`, " +
+				"`CONTRIBUTOR`, " +
+				"`TYPE`) " +
+				"VALUES " +
 				"(" +
 				"?," + // 1 title
 				"?," + // 2 description
@@ -189,7 +190,8 @@ public class AuctionDataSource {
 				"?," + // 4 declared value
 				"?," + // 5 final value
 				"?," + // 6 winner
-				"?" + // 7 contributor
+				"?," + // 7 contributor
+				"?" + // 8 type
 				");",
 				PreparedStatement.RETURN_GENERATED_KEYS);
 			
@@ -200,6 +202,7 @@ public class AuctionDataSource {
 			statement.setDouble(5, o.getFinalValue());
 			statement.setInt(6, o.getWinner());
 			statement.setInt(7, o.getContributor());
+			statement.setString(8, o.getType());
 			
 			statement.executeUpdate();
 			ResultSet rs = statement.getGeneratedKeys();
@@ -208,16 +211,17 @@ public class AuctionDataSource {
 		} else {
 			// update
 			PreparedStatement statement = db.prepareStatement(
-				"UPDATE `AUCTION`.`LOTS`" +
-				"SET" +
-				"`TITLE` = ?," +
-				"`DESCRIPTION` = ?," +
-				"`STATUS` = ?," +
-				"`DECLARED_VALUE` = ?," +
-				"`FINAL_VALUE` = ?," +
-				"`WINNER` = ?," +
-				"`CONTRIBUTOR` = ?," +
-				"`CREATED` = ?" +
+				"UPDATE `auction`.`LOTS` " +
+				"SET " +
+				"`TITLE` = ?, " +
+				"`DESCRIPTION` = ?, " +
+				"`STATUS` = ?, " +
+				"`DECLARED_VALUE` = ?, " +
+				"`FINAL_VALUE` = ?, " +
+				"`WINNER` = ?, " +
+				"`CONTRIBUTOR` = ?, " +
+				"`TYPE` = ? " +
+				//"`CREATED` = ?" +
 				"WHERE `ID` = ?;");
 		
 			statement.setString(1, o.getTitle());
@@ -227,7 +231,8 @@ public class AuctionDataSource {
 			statement.setDouble(5, o.getFinalValue());
 			statement.setInt(6, o.getWinner());
 			statement.setInt(7, o.getContributor());
-			statement.setTimestamp(8, new Timestamp(o.getCreated().getTime()));
+			statement.setString(8, o.getType());
+			//statement.setTimestamp(9, new Timestamp(o.getCreated().getTime()));
 			statement.setInt(9, o.getId());
 			
 			statement.executeUpdate();
@@ -236,18 +241,19 @@ public class AuctionDataSource {
 
 	public Lot getLot(int id) throws SQLException {
 		PreparedStatement statement = db.prepareStatement(
-			"SELECT" +
-			"`LOTS`.`ID`," +
-			"`LOTS`.`TITLE`," +
-			"`LOTS`.`DESCRIPTION`," +
-			"`LOTS`.`STATUS`," +
-			"`LOTS`.`DECLARED_VALUE`," +
-			"`LOTS`.`FINAL_VALUE`," +
-			"`LOTS`.`WINNER`," +
-			"`LOTS`.`CONTRIBUTOR`," +
-			"`LOTS`.`CREATED`," +
-			"`LOTS`.`MODIFIED`" +
-			"FROM `AUCTION`.`LOTS` WHERE `ID` = ?;");
+			"SELECT " +
+			"`LOTS`.`ID`, " +
+			"`LOTS`.`TITLE`, " +
+			"`LOTS`.`DESCRIPTION`, " +
+			"`LOTS`.`STATUS`, " +
+			"`LOTS`.`DECLARED_VALUE`, " +
+			"`LOTS`.`FINAL_VALUE`, " +
+			"`LOTS`.`WINNER`, " +
+			"`LOTS`.`CONTRIBUTOR`, " +
+			"`LOTS`.`TYPE`, " +
+			"`LOTS`.`CREATED`, " +
+			"`LOTS`.`MODIFIED` " +
+			"FROM `auction`.`LOTS` WHERE `ID` = ?;");
 		
 		statement.setInt(1, id);
 		
@@ -263,8 +269,9 @@ public class AuctionDataSource {
 					rs.getDouble("FINAL_VALUE"),
 					rs.getInt("WINNER"),
 					rs.getInt("CONTRIBUTOR"),
-					new Date(rs.getTimestamp("CREATED").getTime()),
-					new Date(rs.getTimestamp("MODIFIED").getTime())
+					rs.getString("TYPE"),
+					new Date(rs.getTimestamp("CREATED") != null ? rs.getTimestamp("CREATED").getTime() : 0),
+					new Date(rs.getTimestamp("MODIFIED") != null ? rs.getTimestamp("MODIFIED").getTime() : 0)
 					);
 		} else {
 			return null;
@@ -273,18 +280,19 @@ public class AuctionDataSource {
 	
 	public Collection<Lot> getAllLots() throws SQLException {
 		PreparedStatement statement = db.prepareStatement(
-			"SELECT" +
-			"`LOTS`.`ID`," +
-			"`LOTS`.`TITLE`," +
-			"`LOTS`.`DESCRIPTION`," +
-			"`LOTS`.`STATUS`," +
-			"`LOTS`.`DECLARED_VALUE`," +
-			"`LOTS`.`FINAL_VALUE`," +
-			"`LOTS`.`WINNER`," +
-			"`LOTS`.`CONTRIBUTOR`," +
-			"`LOTS`.`CREATED`," +
-			"`LOTS`.`MODIFIED`" +
-			"FROM `AUCTION`.`LOTS`;");
+			"SELECT " +
+			"`LOTS`.`ID`, " +
+			"`LOTS`.`TITLE`, " +
+			"`LOTS`.`DESCRIPTION`, " +
+			"`LOTS`.`STATUS`, " +
+			"`LOTS`.`DECLARED_VALUE`, " +
+			"`LOTS`.`FINAL_VALUE`, " +
+			"`LOTS`.`WINNER`, " +
+			"`LOTS`.`CONTRIBUTOR`, " +
+			"`LOTS`.`TYPE`, " +
+			"`LOTS`.`CREATED`, " +
+			"`LOTS`.`MODIFIED` " +
+			"FROM `auction`.`LOTS`;");
 		
 		statement.executeQuery();
 		ResultSet rs = statement.getResultSet();
@@ -299,8 +307,9 @@ public class AuctionDataSource {
 				rs.getDouble("FINAL_VALUE"),
 				rs.getInt("WINNER"),
 				rs.getInt("CONTRIBUTOR"),
-				new Date(rs.getTimestamp("CREATED").getTime()),
-				new Date(rs.getTimestamp("MODIFIED").getTime())
+				rs.getString("TYPE"),
+				new Date(rs.getTimestamp("CREATED") != null ? rs.getTimestamp("CREATED").getTime() : 0),
+				new Date(rs.getTimestamp("MODIFIED") != null ? rs.getTimestamp("MODIFIED").getTime() : 0)
 				));
 		}
 		return r;
@@ -308,18 +317,19 @@ public class AuctionDataSource {
 	
 	public Collection<Lot> getLotsByContributor(int contributor) throws SQLException {
 		PreparedStatement statement = db.prepareStatement(
-			"SELECT" +
-			"`LOTS`.`ID`," +
-			"`LOTS`.`TITLE`," +
-			"`LOTS`.`DESCRIPTION`," +
-			"`LOTS`.`STATUS`," +
-			"`LOTS`.`DECLARED_VALUE`," +
-			"`LOTS`.`FINAL_VALUE`," +
-			"`LOTS`.`WINNER`," +
-			"`LOTS`.`CONTRIBUTOR`," +
-			"`LOTS`.`CREATED`," +
-			"`LOTS`.`MODIFIED`" +
-			"FROM `AUCTION`.`LOTS` WHERE `CONTRIBUTOR` = ?;");
+			"SELECT " +
+			"`LOTS`.`ID`, " +
+			"`LOTS`.`TITLE`, " +
+			"`LOTS`.`DESCRIPTION`, " +
+			"`LOTS`.`STATUS`, " +
+			"`LOTS`.`DECLARED_VALUE`, " +
+			"`LOTS`.`FINAL_VALUE`, " +
+			"`LOTS`.`WINNER`, " +
+			"`LOTS`.`CONTRIBUTOR`, " +
+			"`LOTS`.`TYPE`, " +
+			"`LOTS`.`CREATED`, " +
+			"`LOTS`.`MODIFIED` " +
+			"FROM `auction`.`LOTS` WHERE `CONTRIBUTOR` = ?;");
 		
 		statement.setInt(1, contributor);
 		
@@ -336,8 +346,9 @@ public class AuctionDataSource {
 				rs.getDouble("FINAL_VALUE"),
 				rs.getInt("WINNER"),
 				rs.getInt("CONTRIBUTOR"),
-				new Date(rs.getTimestamp("CREATED").getTime()),
-				new Date(rs.getTimestamp("MODIFIED").getTime())
+				rs.getString("TYPE"),
+				new Date(rs.getTimestamp("CREATED") != null ? rs.getTimestamp("CREATED").getTime() : 0),
+				new Date(rs.getTimestamp("MODIFIED") != null ? rs.getTimestamp("MODIFIED").getTime() : 0)
 				));
 		}
 		return r;
@@ -345,18 +356,19 @@ public class AuctionDataSource {
 	
 	public Collection<Lot> getLotsByWinner(int winner) throws SQLException {
 		PreparedStatement statement = db.prepareStatement(
-			"SELECT" +
-			"`LOTS`.`ID`," +
-			"`LOTS`.`TITLE`," +
-			"`LOTS`.`DESCRIPTION`," +
-			"`LOTS`.`STATUS`," +
-			"`LOTS`.`DECLARED_VALUE`," +
-			"`LOTS`.`FINAL_VALUE`," +
-			"`LOTS`.`WINNER`," +
-			"`LOTS`.`CONTRIBUTOR`," +
-			"`LOTS`.`CREATED`," +
-			"`LOTS`.`MODIFIED`" +
-			"FROM `AUCTION`.`LOTS` WHERE `WINNER` = ?;");
+			"SELECT " +
+			"`LOTS`.`ID`, " +
+			"`LOTS`.`TITLE`, " +
+			"`LOTS`.`DESCRIPTION`, " +
+			"`LOTS`.`STATUS`, " +
+			"`LOTS`.`DECLARED_VALUE`, " +
+			"`LOTS`.`FINAL_VALUE`, " +
+			"`LOTS`.`WINNER`, " +
+			"`LOTS`.`CONTRIBUTOR`, " +
+			"`LOTS`.`TYPE`, " +
+			"`LOTS`.`CREATED`, " +
+			"`LOTS`.`MODIFIED` " +
+			"FROM `auction`.`LOTS` WHERE `WINNER` = ?;");
 		
 		statement.setInt(1, winner);
 		
@@ -373,8 +385,9 @@ public class AuctionDataSource {
 				rs.getDouble("FINAL_VALUE"),
 				rs.getInt("WINNER"),
 				rs.getInt("CONTRIBUTOR"),
-				new Date(rs.getTimestamp("CREATED").getTime()),
-				new Date(rs.getTimestamp("MODIFIED").getTime())
+				rs.getString("TYPE"),
+				new Date(rs.getTimestamp("CREATED") != null ? rs.getTimestamp("CREATED").getTime() : 0),
+				new Date(rs.getTimestamp("MODIFIED") != null ? rs.getTimestamp("MODIFIED").getTime() : 0)
 				));
 		}
 		return r;
@@ -384,13 +397,13 @@ public class AuctionDataSource {
 		if (o.getId() <= 0) {
 			// insert
 			PreparedStatement statement = db.prepareStatement(
-				"INSERT INTO `AUCTION`.`PAYMENTS`" +
+				"INSERT INTO `auction`.`PAYMENTS` " +
 				"(" +
-				"`ACCOUNT_ID`," +
-				"`AMOUNT`," +
-				"`INSTRUMENT`," +
-				"`COMMENTS`)" +
-				"VALUES" +
+				"`ACCOUNT_ID`, " +
+				"`AMOUNT`, " +
+				"`INSTRUMENT`, " +
+				"`COMMENTS`) " +
+				"VALUES " +
 				"(" +
 				"?," + // 1 account id
 				"?," + // 2 amount
@@ -411,8 +424,8 @@ public class AuctionDataSource {
 		} else {
 			// update
 			PreparedStatement statement = db.prepareStatement(
-				"UPDATE `AUCTION`.`PAYMENTS`" +
-				"SET" +
+				"UPDATE `auction`.`PAYMENTS` " +
+				"SET " +
 				"`ACCOUNT_ID` = ?," +
 				"`AMOUNT` = ?," +
 				"`INSTRUMENT` = ?," +
@@ -433,15 +446,15 @@ public class AuctionDataSource {
 
 	public Payment getPayment(int id) throws SQLException {
 		PreparedStatement statement = db.prepareStatement(
-			"SELECT" +
-			"`PAYMENTS`.`ID`," +
-			"`PAYMENTS`.`ACCOUNT_ID`," +
-			"`PAYMENTS`.`AMOUNT`," +
-			"`PAYMENTS`.`INSTRUMENT`," +
-			"`PAYMENTS`.`COMMENTS`," +
-			"`PAYMENTS`.`RECEIVED`," +
-			"`PAYMENTS`.`MODIFIED`" +
-			"FROM `AUCTION`.`PAYMENTS` WHERE `ID` = ?;");
+			"SELECT " +
+			"`PAYMENTS`.`ID`, " +
+			"`PAYMENTS`.`ACCOUNT_ID`, " +
+			"`PAYMENTS`.`AMOUNT`, " +
+			"`PAYMENTS`.`INSTRUMENT`, " +
+			"`PAYMENTS`.`COMMENTS`, " +
+			"`PAYMENTS`.`RECEIVED`, " +
+			"`PAYMENTS`.`MODIFIED` " +
+			"FROM `auction`.`PAYMENTS` WHERE `ID` = ?;");
 		
 		statement.setInt(1, id);
 		
@@ -454,8 +467,8 @@ public class AuctionDataSource {
 					rs.getDouble("AMOUNT"),
 					rs.getString("INSTRUMENT"),
 					rs.getString("COMMENTS"),
-					new Date(rs.getTimestamp("RECEIVED").getTime()),
-					new Date(rs.getTimestamp("MODIFIED").getTime())
+					new Date(rs.getTimestamp("RECEIVED") != null ? rs.getTimestamp("RECEIVED").getTime() : 0),
+					new Date(rs.getTimestamp("MODIFIED") != null ? rs.getTimestamp("MODIFIED").getTime() : 0)
 					);
 		} else {
 			return null;
@@ -464,15 +477,15 @@ public class AuctionDataSource {
 	
 	public Collection<Payment> getAllPayments() throws SQLException {
 		PreparedStatement statement = db.prepareStatement(
-			"SELECT" +
-			"`PAYMENTS`.`ID`," +
-			"`PAYMENTS`.`ACCOUNT_ID`," +
-			"`PAYMENTS`.`AMOUNT`," +
-			"`PAYMENTS`.`INSTRUMENT`," +
-			"`PAYMENTS`.`COMMENTS`," +
-			"`PAYMENTS`.`RECEIVED`," +
-			"`PAYMENTS`.`MODIFIED`" +
-			"FROM `AUCTION`.`PAYMENTS`;");
+			"SELECT " +
+			"`PAYMENTS`.`ID`, " +
+			"`PAYMENTS`.`ACCOUNT_ID`, " +
+			"`PAYMENTS`.`AMOUNT`, " +
+			"`PAYMENTS`.`INSTRUMENT`, " +
+			"`PAYMENTS`.`COMMENTS`, " +
+			"`PAYMENTS`.`RECEIVED`, " +
+			"`PAYMENTS`.`MODIFIED` " +
+			"FROM `auction`.`PAYMENTS`;");
 		
 		statement.executeQuery();
 		ResultSet rs = statement.getResultSet();
@@ -484,8 +497,8 @@ public class AuctionDataSource {
 				rs.getDouble("AMOUNT"),
 				rs.getString("INSTRUMENT"),
 				rs.getString("COMMENTS"),
-				new Date(rs.getTimestamp("RECEIVED").getTime()),
-				new Date(rs.getTimestamp("MODIFIED").getTime())
+				new Date(rs.getTimestamp("RECEIVED") != null ? rs.getTimestamp("RECEIVED").getTime() : 0),
+				new Date(rs.getTimestamp("MODIFIED") != null ? rs.getTimestamp("MODIFIED").getTime() : 0)
 				));
 		}
 		return r;

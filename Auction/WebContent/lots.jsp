@@ -7,21 +7,29 @@
 <title>Lots</title>
 <!-- InstanceEndEditable -->
 
-<link href="main.css" rel="stylesheet" type="text/css" />
-<link href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css"
+<link href="/main.css" rel="stylesheet" type="text/css" />
+<link href="/jquery-ui.css"
 	rel="stylesheet" type="text/css" />
 <script type="text/javascript"
-	src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	src="/jquery-1.9.1.js"></script>
 <script type="text/javascript"
-	src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+	src="/jquery-ui.js"></script>
 <!-- InstanceBeginEditable name="head" -->
-<link href="http://live.datatables.net/media/css/demo_page.css"
+<!-- <link href="/demo_page.css"
 	rel="stylesheet" type="text/css" />
-<link href="http://live.datatables.net/media/css/demo_table.css"
-	rel="stylesheet" type="text/css" />
+<link href="/demo_table.css"
+	rel="stylesheet" type="text/css" /> -->
+<style>
+#allLotsTable td {
+	border: thin solid;
+	border-color: #BBB;
+	margin: 0;
+	padding: 0.4em;
+}
+</style>
 <script type="text/javascript" src="/jquery.form.js"></script>
 <script class="jsbin"
-	src="http://datatables.net/download/build/jquery.dataTables.nightly.js"></script>
+	src="/jquery.dataTables.nightly.js"></script>
 <script type="text/javascript">
 	$(function() {
 		$("#createLotForm").ajaxForm({
@@ -47,7 +55,11 @@
 		
 		
 		// switch to tab view
-		if (document.URL.match(/#create/) != null) {
+		if (document.URL.match(/id=\d*/) != null) {
+			var id = document.URL.match(/id=\d*/)[0]
+						.replace("id=", "");
+			$.ajax({url: '/api/lots/' + id, success: loadEditForm});
+		} else if (document.URL.match(/#create/) != null) {
 			$("#createTab").click();
 		} else if (document.URL.match(/#edit/) != null) {
 			$("#editTab").click();
@@ -69,6 +81,7 @@
 		// <input> tags
 		$form.find('[name="title"]').val($data.find("title").text());
 		$form.find('[name="description"]').val($data.find("description").text());
+		$form.find('[name="type"]').val($data.find("type").text());
 		$form.find('[name="status"]').val($data.find("status").text());
 		$form.find('[name="contributor"]').val($data.find("contributor").text());
 		$form.find('[name="winner"]').val($data.find("winner").text());
@@ -88,6 +101,8 @@
 			context : $("#editLotForm"),
 			beforeSend : beforeSend,
 		});
+		
+		
 
 		// view edit page 
 		$("#editTab").click();
@@ -108,10 +123,11 @@
 			$("<td />").appendTo($tr).text($lot.find("id").text());
 			$("<td />").appendTo($tr).text($lot.find("title").text());
 			$("<td />").appendTo($tr).text($lot.find("description").text());
+			$("<td />").appendTo($tr).text($lot.find("type").text());
 			$("<td />").appendTo($tr).text($lot.find("status").text());
-			$("<td />").appendTo($tr).text($lot.find("contributor").text());
+			$("<td />").appendTo($tr).append('<a href="/accounts.jsp?id=' + $lot.find("contributor").text() + '">' + $lot.find("contributor").text() + '</a>');
 			$("<td />").appendTo($tr).text($lot.find("declaredValue").text());
-			$("<td />").appendTo($tr).text($lot.find("winner").text());
+			$("<td />").appendTo($tr).append('<a href="/accounts.jsp?id=' + $lot.find("winner").text() + '">' + $lot.find("winner").text() + '</a>');
 			$("<td />").appendTo($tr).text($lot.find("finalValue").text());
 			$("<td />").appendTo($tr).text($lot.find("created").text());
 			$("<td />").appendTo($tr).text($lot.find("modified").text());
@@ -129,8 +145,8 @@
 			url : "/api/lots",
 			success : function(data, textStatus, jqXHR) {
 				var $lots = $(data).find("lot");
-				setLotsInTable($("#example tbody"), $lots);
-				var $table = $(this).find('#example');
+				setLotsInTable($("#allLotsTable tbody"), $lots);
+				var $table = $(this).find('#allLotsTable');
 				//$table.dataTable();
 			},
 			context : document,
@@ -174,17 +190,17 @@
 <div id="container">
   <div id="header" style=";">
     <div style="height: 160px; padding: 1em;">
-      <div style="background-image: url(); background-repeat:no-repeat; display:block; float:left; height: 160px; width: 260px;"><a href="/"><img name="logo" src="http://www.crehst.org/wp-content/themes/crehst/images/header.png" alt="" style="border: 0;"/></a></div>
+      <div style="display:block; float:left; height: 160px; width: 260px;"><a href="/"><img src="/images/header.png" name="logo" width="260" height="160" style="border: 0;"/></a></div>
       <!-- InstanceBeginEditable name="Headline" -->
       <div style="font-size:3em; float:left;">Lots</div>
       <!-- InstanceEndEditable --></div>
     <div class="nav-bar">
         <a href="/check-in.jsp">Check In</a>
-        <a href="raise-your-program.jsp">Raise Your Program</a>
-        <a href="lot-closing.jsp">Lot Closing</a>
+        <!-- <a href="raise-your-program.jsp">Raise Your Program</a>
+        <a href="lot-closing.jsp">Lot Closing</a> -->
         <a href="check-out.jsp">Check Out</a>
-        <a href="accounts.jsp">Accounts</a>
-        <a href="lots.jsp">Lots</a>
+        <a href="accounts.jsp#view">Accounts</a>
+        <a href="lots.jsp#view">Lots</a>
         <!-- <a href="payments.jsp">Payments</a>
         <a href="search.jsp">Search</a>
         <a href="#">Admin</a> -->
@@ -213,13 +229,19 @@
 									</p>
 								</td>
 								<td>Status:<br /> <select name="status" title="Status">
-										<option value="NONE">New</option>
-										<option value="BIDDING">Bidding</option>
-										<option value="CLOSED">Closed to bidding</option>
-										<option value="PAID">Closed paid</option>
+										<option value="NONE">-</option>
+										<option value="NOT_YET_OPENED">New</option>
+										<option value="BIDDING_OPEN">Open for bidding</option>
+										<option value="BIDDING_CLOSED">Closed to bidding</option>
+										<option value="CLOSED_PAID">Closed and paid</option>
+										<option value="CANCELLED">Cancelled</option>
 								</select>
 								</td>
-								<td style="padding-right: 4em;">&nbsp;</td>
+								<td style="padding-right: 4em;">Type:<br /> <select name="type" title="Type">
+										<option value="">-</option>
+										<option value="RYP">Raise your program</option>
+										<option value="SAL">Silent auction lot</option>
+								</select></td>
 								<td><p name="id">&nbsp;</p></td>
 							</tr>
 							<tr>
@@ -262,13 +284,19 @@
 									</p>
 								</td>
 								<td>Status:<br /> <select name="status" title="Status">
-										<option value="NONE">New</option>
-										<option value="BIDDING">Bidding</option>
-										<option value="CLOSED">Closed to bidding</option>
-										<option value="PAID">Closed paid</option>
+										<option value="NONE">-</option>
+										<option value="NOT_YET_OPENED">New</option>
+										<option value="BIDDING_OPEN">Open for bidding</option>
+										<option value="BIDDING_CLOSED">Closed to bidding</option>
+										<option value="CLOSED_PAID">Closed and paid</option>
+										<option value="CANCELLED">Cancelled</option>
 								</select>
 								</td>
-								<td style="padding-right: 4em;">&nbsp;</td>
+								<td style="padding-right: 4em;">Type:<br /> <select name="type" title="Type">
+										<option value="">-</option>
+										<option value="RYP">Raise your program</option>
+										<option value="SAL">Silent auction lot</option>
+								</select></td>
 								<td>Internal ID:<br /><span name="id" /></td>
 							</tr>
 							<tr>
@@ -299,13 +327,14 @@
 				</div>
                 				<div id="container">
 					<table cellpadding="0" cellspacing="0" border="0" class="display"
-						id="example">
+						id="allLotsTable">
 						<thead>
 							<tr>
 								<th scope="col"></th>
 								<th scope="col">ID</th>
 								<th scope="col">Title</th>
 								<th scope="col">Description</th>
+								<th scope="col">Type</th>
 								<th scope="col">Status</th>
 								<th scope="col">Contributor</th>
 								<th scope="col">Declared Value</th>
@@ -322,6 +351,7 @@
 								<th scope="col">ID</th>
 								<th scope="col">Title</th>
 								<th scope="col">Description</th>
+								<th scope="col">Type</th>
 								<th scope="col">Status</th>
 								<th scope="col">Contributor</th>
 								<th scope="col">Declared Value</th>
@@ -337,7 +367,7 @@
 			<!-- InstanceEndEditable -->
   <!-- end #mainContent --></div>
   <div id="footer">
-    <p>Footer</p>
+    
   <!-- end #footer --></div>
 <!-- end #container --></div>
 </body>

@@ -7,13 +7,13 @@
 <title>Raise Your Program</title>
 <!-- InstanceEndEditable -->
 
-<link href="main.css" rel="stylesheet" type="text/css" />
-<link href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css"
+<link href="/main.css" rel="stylesheet" type="text/css" />
+<link href="/jquery-ui.css"
 	rel="stylesheet" type="text/css" />
 <script type="text/javascript"
-	src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	src="/jquery-1.9.1.js"></script>
 <script type="text/javascript"
-	src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+	src="/jquery-ui.js"></script>
 <!-- InstanceBeginEditable name="head" -->
 <!-- InstanceEndEditable -->
 </head>
@@ -23,17 +23,17 @@
 <div id="container">
   <div id="header" style=";">
     <div style="height: 160px; padding: 1em;">
-      <div style="background-image: url(); background-repeat:no-repeat; display:block; float:left; height: 160px; width: 260px;"><a href="/"><img name="logo" src="http://www.crehst.org/wp-content/themes/crehst/images/header.png" alt="" style="border: 0;"/></a></div>
+      <div style="display:block; float:left; height: 160px; width: 260px;"><a href="/"><img src="/images/header.png" name="logo" width="260" height="160" style="border: 0;"/></a></div>
       <!-- InstanceBeginEditable name="Headline" -->
       <div style="font-size:3em; float:left;">Raise Your Program</div>
       <!-- InstanceEndEditable --></div>
     <div class="nav-bar">
         <a href="/check-in.jsp">Check In</a>
-        <a href="raise-your-program.jsp">Raise Your Program</a>
-        <a href="lot-closing.jsp">Lot Closing</a>
+        <!-- <a href="raise-your-program.jsp">Raise Your Program</a>
+        <a href="lot-closing.jsp">Lot Closing</a> -->
         <a href="check-out.jsp">Check Out</a>
-        <a href="accounts.jsp">Accounts</a>
-        <a href="lots.jsp">Lots</a>
+        <a href="accounts.jsp#view">Accounts</a>
+        <a href="lots.jsp#view">Lots</a>
         <!-- <a href="payments.jsp">Payments</a>
         <a href="search.jsp">Search</a>
         <a href="#">Admin</a> -->
@@ -42,7 +42,7 @@
   <div id="mainContent"><!-- InstanceBeginEditable name="Body" --><a href="raise-your-program2.jsp">raise-your-program2</a><!-- InstanceEndEditable -->
   <!-- end #mainContent --></div>
   <div id="footer">
-    <p>Footer</p>
+    
   <!-- end #footer --></div>
 <!-- end #container --></div>
 </body>
