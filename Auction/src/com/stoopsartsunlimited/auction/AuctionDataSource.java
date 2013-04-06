@@ -10,10 +10,13 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.stoopsartsunlimited.auction.Lot.BiddingStatus;
 
 public class AuctionDataSource {
-	private static final String connectionString = "jdbc:mysql://192.168.1.136:3306/auction";
+	private static final String connectionString = "jdbc:mysql://localhost:3306/auction";
 	private static final String dbUser = "auction";
 	private static final String dbPass = "auction";
 	private Connection db;
@@ -21,11 +24,13 @@ public class AuctionDataSource {
 	public AuctionDataSource() throws SQLException {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
+			Logger logger = LoggerFactory.getLogger(AuctionDataSource.class);
+			logger.info("jdbc connection string: " + connectionString);
+			db = DriverManager.getConnection(connectionString, dbUser, dbPass);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			throw new SQLException(e);
 		}
-		db = DriverManager.getConnection(connectionString, dbUser, dbPass);
 	}
 	
 	public void close() throws SQLException {
