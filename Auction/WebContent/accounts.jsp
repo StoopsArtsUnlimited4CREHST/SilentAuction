@@ -168,28 +168,35 @@
 
 		// clear table
 		$table.find("tr").remove();
+		var strings = new Array();
 
 		for ( var i = 0; i < $accounts.length; i++) {
-			$tr = $("<tr />").appendTo($table);
 			var $account = $($accounts[i]);
-			$("<td />").appendTo($tr).append('<input type="button" value="Edit" onclick="javascript: $.ajax({url: \'/api/accounts/' + $account.find("id").text() +'\', success: loadEditForm});" />'); 
-			$("<td />").appendTo($tr).text($account.find("bidderId").text());
-			$("<td />").appendTo($tr).text($account.find("name").text());
-			$("<td />").appendTo($tr).text($account.find("address").text());
-			$("<td />").appendTo($tr).text($account.find("phone").text());
-			$("<td />").appendTo($tr).text($account.find("email").text());
-			$("<td />").appendTo($tr).text($account.find("taxId").text());
-			$("<td />").appendTo($tr).text($account.find("active").text());
-			$("<td />").appendTo($tr).text($account.find("created").text());
-			$("<td />").appendTo($tr).text($account.find("modified").text());
-			$("<td />").appendTo($tr).text($account.find("id").text());
-
-			/*
-			for ( var j = 0; j < $account.children.length; j++) {
-				$("<td />").appendTo($tr).text($($account.children[j]).text());
-			}
-			*/
+			strings.push("<tr><td>");
+			strings.push('<input type="button" value="Edit" onclick="javascript: $.ajax({url: \'/api/accounts/' + $account.find("id").text() +'\', success: loadEditForm});" />');
+			strings.push("</td><td>");
+			strings.push($account.find("bidderId").text());
+			strings.push("</td><td>");
+			strings.push($account.find("name").text());
+			strings.push("</td><td>");
+			strings.push($account.find("address").text());
+			strings.push("</td><td>");
+			strings.push($account.find("phone").text());
+			strings.push("</td><td>");
+			strings.push($account.find("email").text());
+			strings.push("</td><td>");
+			strings.push($account.find("taxId").text());
+			strings.push("</td><td>");
+			strings.push($account.find("active").text());
+			strings.push("</td><td>");
+			strings.push($account.find("created").text());
+			strings.push("</td><td>");
+			strings.push($account.find("modified").text());
+			strings.push("</td><td>");
+			strings.push($account.find("id").text());
+			strings.push("</td></tr>");
 		}
+		$table.append(strings.join(""));
 	}
 
 	function reloadTable() {
@@ -357,7 +364,7 @@
 								id="editAccountStatus" src="/images/blank.png" />
 					  </p>
                       
-
+                      
 					</form>
                         <div>
                           Lots won by this account:

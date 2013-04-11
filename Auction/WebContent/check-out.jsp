@@ -39,7 +39,39 @@ function setAccountsInTable(table, accounts) {
 
 	// clear table
 	$table.find("tr").remove();
+	var strings = new Array();
 
+	for ( var i = 0; i < $accounts.length; i++) {
+		var $account = $($accounts[i]);
+		strings.push("<tr><td>");
+		strings.push('<a href="/check-out.jsp?id=' + $account.find("id").text() + '&phase=Totals">use</a>');
+		strings.push("</td><td>");
+		strings.push($account.find("bidderId").text());
+		strings.push("</td><td>");
+		strings.push($account.find("name").text());
+		strings.push("</td><td>");
+		/*
+		strings.push($account.find("address").text());
+		strings.push("</td><td>");
+		strings.push($account.find("phone").text());
+		strings.push("</td><td>");
+		strings.push($account.find("email").text());
+		strings.push("</td><td>");
+		strings.push($account.find("taxId").text());
+		strings.push("</td><td>");
+		strings.push($account.find("active").text());
+		strings.push("</td><td>");
+		strings.push($account.find("created").text());
+		strings.push("</td><td>");
+		strings.push($account.find("modified").text());
+		strings.push("</td><td>");
+		*/
+		strings.push($account.find("id").text());
+		strings.push("</td></tr>");
+	}
+	$table.append(strings.join(""));
+
+	/*
 	for ( var i = 0; i < $accounts.length; i++) {
 		$tr = $("<tr />").appendTo($table);
 		var $account = $($accounts[i]);
@@ -54,13 +86,8 @@ function setAccountsInTable(table, accounts) {
 		//$("<td />").appendTo($tr).text($account.find("active").text());
 		//$("<td />").appendTo($tr).text($account.find("created").text());
 		//$("<td />").appendTo($tr).text($account.find("modified").text());
-
-		/*
-		for ( var j = 0; j < $account.children.length; j++) {
-			$("<td />").appendTo($tr).text($($account.children[j]).text());
-		}
-		*/
 	}
+	*/
 }
 
 function loadAccountsTable(id) {
@@ -260,32 +287,32 @@ $(function() {
             <thead>
                 <tr>
                     <th scope="col"></th>
-                    <th scope="col">ID</th>
+                    <th scope="col">Bidder ID</th>
                     <th scope="col">Name</th>
                     <!-- <th scope="col">Address</th>
                     <th scope="col">Phone</th>
                     <th scope="col">Email</th>
                     <th scope="col">Tax ID</th> -->
-                    <th scope="col">Bidder ID</th>
                     <!-- <th scope="col">Active</th>
                     <th scope="col">Created</th>
                     <th scope="col">Modified</th> -->
+                    <th scope="col">Internal ID</th>
                 </tr>
             </thead>
             <tbody></tbody>
             <tfoot>
                 <tr>
                     <th scope="col"></th>
-                    <th scope="col">ID</th>
+                    <th scope="col">Bidder ID</th>
                     <th scope="col">Name</th>
                     <!-- <th scope="col">Address</th>
                     <th scope="col">Phone</th>
                     <th scope="col">Email</th>
                     <th scope="col">Tax ID</th> -->
-                    <th scope="col">Bidder ID</th>
                     <!-- <th scope="col">Active</th>
                     <th scope="col">Created</th>
                     <th scope="col">Modified</th> -->
+                    <th scope="col">Internal ID</th>
                 </tr>
             </tfoot>
         </table>

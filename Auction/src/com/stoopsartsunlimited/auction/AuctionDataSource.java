@@ -10,9 +10,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.stoopsartsunlimited.auction.Lot.BiddingStatus;
 
 public class AuctionDataSource {
@@ -24,8 +21,6 @@ public class AuctionDataSource {
 	public AuctionDataSource() throws SQLException {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			Logger logger = LoggerFactory.getLogger(AuctionDataSource.class);
-			logger.info("jdbc connection string: " + connectionString);
 			db = DriverManager.getConnection(connectionString, dbUser, dbPass);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

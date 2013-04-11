@@ -115,29 +115,56 @@
 
 		// clear table
 		$table.find("tr").remove();
+		var strings = new Array();
 
 		for ( var i = 0; i < $lots.length; i++) {
-			$tr = $("<tr />").appendTo($table);
+			var $account = $($accounts[i]);
 			var $lot = $($lots[i]);
-			$("<td />").appendTo($tr).append('<input type="button" value="Edit" onclick="javascript: $.ajax({url: \'/api/lots/' + $lot.find("id").text() +'\', success: loadEditForm});" />'); 
+			strings.push("<tr><td>");
+			strings.push('<input type="button" value="Edit" onclick="javascript: $.ajax({url: \'/api/lots/' + $lot.find("id").text() +'\', success: loadEditForm});" />');
+			strings.push("</td><td>");
+			strings.push($lot.find("id").text());
+			strings.push("</td><td>");
+			strings.push($lot.find("title").text());
+			strings.push("</td><td>");
+			strings.push($lot.find("description").text());
+			strings.push("</td><td>");
+			strings.push($lot.find("type").text());
+			strings.push("</td><td>");
+			strings.push($lot.find("status").text());
+			strings.push("</td><td>");
+			strings.push('<a href="/accounts.jsp?id=' + $lot.find("contributor").text() + '">' + $lot.find("contributor").text() + '</a>');
+			strings.push("</td><td>");
+			strings.push($lot.find("declaredValue").text());
+			strings.push("</td><td>");
+			strings.push('<a href="/accounts.jsp?id=' + $lot.find("winner").text() + '">' + $lot.find("winner").text() + '</a>');
+			strings.push("</td><td>");
+			strings.push($lot.find("finalValue").text());
+			strings.push("</td><td>");
+			strings.push($lot.find("created").text());
+			strings.push("</td><td>");
+			strings.push($lot.find("modified").text());
+			strings.push("</td></tr>");
+		}
+		$table.append(strings.join(""));
+		
+
+		/*
+		$("<td />").appendTo($tr).append(''); 
 			$("<td />").appendTo($tr).text($lot.find("id").text());
 			$("<td />").appendTo($tr).text($lot.find("title").text());
 			$("<td />").appendTo($tr).text($lot.find("description").text());
 			$("<td />").appendTo($tr).text($lot.find("type").text());
 			$("<td />").appendTo($tr).text($lot.find("status").text());
-			$("<td />").appendTo($tr).append('<a href="/accounts.jsp?id=' + $lot.find("contributor").text() + '">' + $lot.find("contributor").text() + '</a>');
+			$("<td />").appendTo($tr).append();
 			$("<td />").appendTo($tr).text($lot.find("declaredValue").text());
-			$("<td />").appendTo($tr).append('<a href="/accounts.jsp?id=' + $lot.find("winner").text() + '">' + $lot.find("winner").text() + '</a>');
+			$("<td />").appendTo($tr).append();
 			$("<td />").appendTo($tr).text($lot.find("finalValue").text());
 			$("<td />").appendTo($tr).text($lot.find("created").text());
 			$("<td />").appendTo($tr).text($lot.find("modified").text());
 
-			/*
-			for ( var j = 0; j < $lot.children.length; j++) {
-				$("<td />").appendTo($tr).text($($lot.children[j]).text());
-			}
-			*/
 		}
+		*/
 	}
 
 	function reloadTable() {

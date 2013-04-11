@@ -35,7 +35,39 @@ function setAccountsInTable(table, accounts) {
 
 	// clear table
 	$table.find("tr").remove();
+	var strings = new Array();
 
+	for ( var i = 0; i < $accounts.length; i++) {
+		var $account = $($accounts[i]);
+		strings.push("<tr><td>");
+		strings.push('<a href="/check-in.jsp?id=' + $account.find("id").text() + '&phase=Update">use</a>');
+		strings.push("</td><td>");
+		strings.push($account.find("bidderId").text());
+		strings.push("</td><td>");
+		strings.push($account.find("name").text());
+		strings.push("</td><td>");
+		strings.push($account.find("address").text());
+		strings.push("</td><td>");
+		strings.push($account.find("phone").text());
+		strings.push("</td><td>");
+		strings.push($account.find("email").text());
+		strings.push("</td><td>");
+		/*
+		strings.push($account.find("taxId").text());
+		strings.push("</td><td>");
+		strings.push($account.find("active").text());
+		strings.push("</td><td>");
+		strings.push($account.find("created").text());
+		strings.push("</td><td>");
+		strings.push($account.find("modified").text());
+		strings.push("</td><td>");
+		*/
+		strings.push($account.find("id").text());
+		strings.push("</td></tr>");
+	}
+	$table.append(strings.join(""));
+
+	/*
 	for ( var i = 0; i < $accounts.length; i++) {
 		$tr = $("<tr />").appendTo($table);
 		var $account = $($accounts[i]);
@@ -50,13 +82,8 @@ function setAccountsInTable(table, accounts) {
 		//$("<td />").appendTo($tr).text($account.find("created").text());
 		//$("<td />").appendTo($tr).text($account.find("modified").text());
 		$("<td />").appendTo($tr).text($account.find("id").text());
-		
-		/*
-		for ( var j = 0; j < $account.children.length; j++) {
-			$("<td />").appendTo($tr).text($($account.children[j]).text());
-		}
-		*/
 	}
+	*/
 }
 
 function loadAccountsTable(id) {
